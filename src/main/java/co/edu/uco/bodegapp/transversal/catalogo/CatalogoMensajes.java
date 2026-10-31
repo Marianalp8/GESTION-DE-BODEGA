@@ -43,6 +43,10 @@ public class CatalogoMensajes {
         private DAOFactory() {
         }
 
+        public static final String USUARIO_ERROR_CONEXION_NULA = "No es posible continuar con la operacion deseada porque no se recibio la conexion contra la fuente de informacion. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_CONEXION_CERRADA = "No es posible continuar con la operacion deseada porque la conexion contra la fuente de informacion se encuentra cerrada. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_VALIDANDO_CONEXION = "Se ha presentado un problema tratando de validar si la conexion contra la fuente de informacion estaba abierta. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+
         public static final String USUARIO_ERROR_FUENTE_INFORMACION_NO_HABILITADA = "La fuente de informacion que se solicito para llevar a cabo la operacion deseada no esta habilitada. Por favor contacte al administrador de la aplicacion y reporte la novedad";
     }
 

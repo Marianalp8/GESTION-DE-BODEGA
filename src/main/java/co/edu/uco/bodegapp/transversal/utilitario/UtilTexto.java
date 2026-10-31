@@ -69,8 +69,16 @@ public class UtilTexto {
     }
 
     //revisa si el texto tiene la forma que pide el patron (ej. solo letras, o forma de correo)
-    public boolean cumplePatron(String valor, String patron){
-        return obtenerValorDefecto(valor).matches(patron);
+    public boolean formatoEsValido(String valor, String patron){
+        return obtenerValorDefecto(valor).matches(obtenerValorDefecto(patron));
+    }
+
+    public String concatenar(Object...valores){
+        var resultado= new StringBuilder();
+        for(var valor:valores){
+            resultado.append(UtilObjeto.obtenerValorDefectoSiValorOriginalEsNulo(valor, vacia));
+        }
+        return  resultado.toString();
     }
 
 }
