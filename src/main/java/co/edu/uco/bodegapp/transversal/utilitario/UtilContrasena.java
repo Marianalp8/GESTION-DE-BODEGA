@@ -27,8 +27,9 @@ public class UtilContrasena {
             return BCrypt.checkpw(UtilTexto.obtenerValorDefecto(contrasena),
                     UtilTexto.obtenerValorDefecto(contrasenaEncriptada));
         } catch (Exception excepcion) {
-            //si lo guardado no es un texto encriptado valido (ej. esta vacio), no coincide
-            return false;
+            var mensajeUsuario = CatalogoMensajes.UtilContrasena.USUARIO_ERROR_PROBLEMA_VALIDANDO_CONTRASENA;
+            throw BodegappTransversalExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+
         }
     }
 }

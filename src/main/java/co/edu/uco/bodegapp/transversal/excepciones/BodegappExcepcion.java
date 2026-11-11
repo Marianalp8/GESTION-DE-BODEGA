@@ -24,10 +24,6 @@ public class BodegappExcepcion extends RuntimeException {
         setExcepcionRaiz(excepcionRaiz);
     }
 
-    public static long getSerialVersionuid() {
-        return serialVersionUID;
-    }
-
     public Capa getCapa() {
         return capa;
     }

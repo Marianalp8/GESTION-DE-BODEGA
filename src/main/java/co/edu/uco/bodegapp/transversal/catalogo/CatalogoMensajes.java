@@ -1,7 +1,6 @@
 package co.edu.uco.bodegapp.transversal.catalogo;
 
-//cada clase interna agrupa los mensajes de un tema
-//un buen mensaje dice que fallo, por que y que hacer
+
 public class CatalogoMensajes {
 
     private CatalogoMensajes() {
@@ -80,7 +79,10 @@ public class CatalogoMensajes {
 
         private UsuarioSqlServerDAO() {
         }
-
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_USUARIO_POR_NOMBRE_USUARIO = "Se ha presentado un problema tratando de consultar el usuario por su nombre de usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_USUARIO_POR_NOMBRE_USUARIO = "Se ha presentado un problema NO CONTROLADO tratando de consultar el usuario por su nombre de usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_USUARIO_POR_CORREO = "Se ha presentado un problema tratando de consultar el usuario por su correo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_USUARIO_POR_CORREO = "Se ha presentado un problema NO CONTROLADO tratando de consultar el usuario por su correo. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
         public static final String USUARIO_ERROR_PROBLEMA_CREANDO_USUARIO = "Se ha presentado un problema tratando de registrar el usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
         public static final String USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CREANDO_USUARIO = "Se ha presentado un problema NO CONTROLADO tratando de registrar el usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
         public static final String USUARIO_ERROR_PROBLEMA_CONSULTANDO_USUARIO_POR_ID = "Se ha presentado un problema tratando de consultar la informacion del usuario deseado. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
@@ -112,7 +114,7 @@ public class CatalogoMensajes {
 
         private UtilContrasena() {
         }
-
+        public static final String USUARIO_ERROR_PROBLEMA_VALIDANDO_CONTRASENA = "Se ha presentado un problema tratando de validar la contrasena. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
         public static final String USUARIO_ERROR_PROBLEMA_ENCRIPTANDO_CONTRASENA = "Se ha presentado un problema tratando de proteger la contrasena. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
     }
 
@@ -143,15 +145,17 @@ public class CatalogoMensajes {
         public static final String CREDENCIALES_INCORRECTAS = "Usuario o contrasena incorrectos";
         public static final String CUENTA_PENDIENTE_DE_APROBACION = "Tu cuenta espera aprobacion del administrador";
         public static final String CUENTA_DESACTIVADA = "Tu cuenta esta desactivada";
-
+        public static final String ROL_NO_CONFIGURADO = "No es posible realizar la accion porque falta un rol en la fuente de informacion. Por favor contacte al administrador de la aplicacion y reporte la novedad";
         public static final String SIN_PERMISO_PARA_LA_ACCION = "No tienes permiso para esta accion";
         public static final String USUARIO_NO_EXISTE = "No es posible realizar la accion porque el usuario indicado no existe. Por favor verifique el usuario e intente de nuevo";
         public static final String USUARIO_NO_ESTA_PENDIENTE = "Solo se puede aprobar una cuenta que este pendiente, y esta cuenta ya fue aprobada antes";
         public static final String USUARIO_NO_ESTA_ACTIVO = "No es posible realizar la accion porque la cuenta del usuario no esta activa. Si esta pendiente, primero hay que aprobarla; si esta desactivada, primero hay que reactivarla";
         public static final String USUARIO_NO_ESTA_INACTIVO = "Solo se puede reactivar una cuenta que este desactivada";
-        public static final String ROL_OBLIGATORIO = "Debe elegir un rol para el usuario. El rol no puede ser 'Sin asignar'";
+        public static final String ROL_OBLIGATORIO = "Debe elegir un rol para el usuario. Por favor elija un rol de la lista e intente de nuevo";
         public static final String ROL_NO_EXISTE = "El rol elegido no existe. Por favor elija un rol de la lista e intente de nuevo";
+        public static final String ROL_NO_ASIGNABLE = "El rol 'Sin asignar' no se le puede dar a un usuario. Por favor elija Administrador o Repartidor";
         public static final String ROL_IGUAL_AL_ACTUAL = "El usuario ya tiene ese rol. Por favor elija un rol diferente";
+
         public static final String ADMINISTRADOR_NO_PUEDE_DESACTIVARSE_A_SI_MISMO = "Un administrador no puede desactivar su propia cuenta";
         public static final String ULTIMO_ADMINISTRADOR_ACTIVO = "No es posible realizar la accion porque es el unico administrador activo y el sistema quedaria sin nadie que apruebe cuentas";
         public static final String ESTADO_USUARIO_NO_CONFIGURADO = "No es posible realizar la accion porque falta un estado de usuario en la fuente de informacion. Por favor contacte al administrador de la aplicacion y reporte la novedad";

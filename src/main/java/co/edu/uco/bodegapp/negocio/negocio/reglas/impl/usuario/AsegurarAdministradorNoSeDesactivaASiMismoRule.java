@@ -7,6 +7,7 @@ import co.edu.uco.bodegapp.transversal.excepciones.BodegappNegocioExcepcion;
 import java.util.UUID;
 
 //un administrador no puede desactivar su propia cuenta
+// si quien lo hace y a quien se lo hacen es la misma persona error
 public class AsegurarAdministradorNoSeDesactivaASiMismoRule implements Rule<UUID> {
 
     private static final Rule<UUID> instancia = new AsegurarAdministradorNoSeDesactivaASiMismoRule();

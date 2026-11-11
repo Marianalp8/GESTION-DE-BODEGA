@@ -55,16 +55,9 @@ public class UtilTexto {
         return obtenerValorDefecto(valor).length();
     }
 
-    public int obtenerLongitudCadena(String valor, boolean quitarEspaciosEnBlanco){
-
-        return quitarEspaciosEnBlanco ?
-                obtenerLongitudCadena(quitarEspaciosEnBlanco(valor)): obtenerLongitudCadena(valor);
-    }
-
     public boolean longitudCadenaEsValida(String valor, int longitudInicial , int longitudFinal, boolean quitarEspaciosEnBlanco){
 
         var valorSanitizado = quitarEspaciosEnBlanco ? quitarEspaciosEnBlanco(valor): valor;
-
         return obtenerLongitudCadena(valorSanitizado)>= longitudInicial && obtenerLongitudCadena(valorSanitizado)<=longitudFinal;
     }
 

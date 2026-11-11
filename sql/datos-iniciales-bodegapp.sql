@@ -1,16 +1,13 @@
 use Bodegapp;
 go
 
--- 'Sin asignar' y 'Pendiente' llevan el id fijo de ceros porque son los default de la tabla usuario
-insert into rol (id_rol, nombre) values
-('00000000-0000-0000-0000-000000000000', 'Sin asignar');
 insert into rol (nombre) values
+('Sin asignar'),
 ('Administrador'),
 ('Repartidor');
 
-insert into estado_usuario (id_estado_usuario, nombre) values
-('00000000-0000-0000-0000-000000000000', 'Pendiente');
 insert into estado_usuario (nombre) values
+('Pendiente'),
 ('Activo'),
 ('Inactivo');
 

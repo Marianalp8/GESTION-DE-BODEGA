@@ -10,4 +10,6 @@ import java.util.UUID;
 //un usuario se crea, se consulta y se actualiza; nunca se borra (se desactiva)
 public interface UsuarioDAO extends CrearDAO<UsuarioEntidad>, ConsultarDAO<UsuarioEntidad, UUID>,
         ActualizarDAO<UsuarioEntidad, UUID> {
+    UsuarioEntidad consultarPorCorreo(String correo);
+    UsuarioEntidad consultarPorNombreUsuario(String nombreUsuario);
 }

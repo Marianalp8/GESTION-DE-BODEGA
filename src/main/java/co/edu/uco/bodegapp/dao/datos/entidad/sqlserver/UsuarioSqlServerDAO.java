@@ -106,18 +106,18 @@ public class UsuarioSqlServerDAO extends SqlDAO implements UsuarioDAO {
             cont = cont + 1;
         }
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getNombre())) {
-            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql, (cont == 0 ? " where " : " and "), "u.nombre = ?");
-            parametros.add(filtro.getNombre());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql, (cont == 0 ? " where " : " and "), "u.nombre like ?");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%", filtro.getNombre(), "%"));
             cont = cont + 1;
         }
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getCorreo())) {
-            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql, (cont == 0 ? " where " : " and "), "u.correo = ?");
-            parametros.add(filtro.getCorreo());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql, (cont == 0 ? " where " : " and "), "u.correo like ?");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%", filtro.getCorreo(), "%"));
             cont = cont + 1;
         }
         if (!UtilTexto.getUtilTexto().esVacia(filtro.getNombreUsuario())) {
-            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql, (cont == 0 ? " where " : " and "), "u.nombre_usuario = ?");
-            parametros.add(filtro.getNombreUsuario());
+            sentenciaSql = UtilTexto.getUtilTexto().concatenar(sentenciaSql, (cont == 0 ? " where " : " and "), "u.nombre_usuario like ?");
+            parametros.add(UtilTexto.getUtilTexto().concatenar("%", filtro.getNombreUsuario(), "%"));
             cont = cont + 1;
         }
 
@@ -245,5 +245,89 @@ public class UsuarioSqlServerDAO extends SqlDAO implements UsuarioDAO {
             var mensajeUsuario = CatalogoMensajes.UsuarioSqlServerDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_ACTUALIZANDO_USUARIO;
             throw BodegappDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
         }
+    }
+
+    @Override
+    public UsuarioEntidad consultarPorCorreo(String correo) {
+        var sentenciaSql = "select u.id_usuario, u.nombre, u.correo, u.nombre_usuario, u.contrasena, u.fecha_registro, "
+                + "r.id_rol, r.nombre as nombre_rol, e.id_estado_usuario, e.nombre as nombre_estado_usuario "
+                + "from usuario as u "
+                + "inner join rol as r on u.id_rol = r.id_rol "
+                + "inner join estado_usuario as e on u.id_estado_usuario = e.id_estado_usuario "
+                + "where u.correo = ?";
+        //si nadie tiene ese correo, se devuelve un usuario vacio
+        var usuarioEncontrado = new UsuarioEntidad.Builder().build();
+        try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
+            sentencia.setString(1, correo);
+
+            var resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                usuarioEncontrado = new UsuarioEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_usuario")))
+                        .nombre(resultado.getString("nombre"))
+                        .correo(resultado.getString("correo"))
+                        .nombreUsuario(resultado.getString("nombre_usuario"))
+                        .contrasena(resultado.getString("contrasena"))
+                        .rol(new RolEntidad.Builder()
+                                .id(UUID.fromString(resultado.getString("id_rol")))
+                                .nombre(resultado.getString("nombre_rol"))
+                                .build())
+                        .estadoUsuario(new EstadoUsuarioEntidad.Builder()
+                                .id(UUID.fromString(resultado.getString("id_estado_usuario")))
+                                .nombre(resultado.getString("nombre_estado_usuario"))
+                                .build())
+                        .fechaRegistro(resultado.getObject("fecha_registro", LocalDateTime.class))
+                        .build();
+            }
+        } catch (SQLException excepcion) {
+            var mensajeUsuario = CatalogoMensajes.UsuarioSqlServerDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_USUARIO_POR_CORREO;
+            throw BodegappDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        } catch (Exception excepcion) {
+            var mensajeUsuario = CatalogoMensajes.UsuarioSqlServerDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_USUARIO_POR_CORREO;
+            throw BodegappDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        }
+        return usuarioEncontrado;
+    }
+
+    @Override
+    public UsuarioEntidad consultarPorNombreUsuario(String nombreUsuario) {
+        var sentenciaSql = "select u.id_usuario, u.nombre, u.correo, u.nombre_usuario, u.contrasena, u.fecha_registro, "
+                + "r.id_rol, r.nombre as nombre_rol, e.id_estado_usuario, e.nombre as nombre_estado_usuario "
+                + "from usuario as u "
+                + "inner join rol as r on u.id_rol = r.id_rol "
+                + "inner join estado_usuario as e on u.id_estado_usuario = e.id_estado_usuario "
+                + "where u.nombre_usuario = ?";
+        //si nadie tiene ese nombre de usuario, se devuelve un usuario vacio
+        var usuarioEncontrado = new UsuarioEntidad.Builder().build();
+        try (var sentencia = getConexion().prepareStatement(sentenciaSql)) {
+            sentencia.setString(1, nombreUsuario);
+
+            var resultado = sentencia.executeQuery();
+            if (resultado.next()) {
+                usuarioEncontrado = new UsuarioEntidad.Builder()
+                        .id(UUID.fromString(resultado.getString("id_usuario")))
+                        .nombre(resultado.getString("nombre"))
+                        .correo(resultado.getString("correo"))
+                        .nombreUsuario(resultado.getString("nombre_usuario"))
+                        .contrasena(resultado.getString("contrasena"))
+                        .rol(new RolEntidad.Builder()
+                                .id(UUID.fromString(resultado.getString("id_rol")))
+                                .nombre(resultado.getString("nombre_rol"))
+                                .build())
+                        .estadoUsuario(new EstadoUsuarioEntidad.Builder()
+                                .id(UUID.fromString(resultado.getString("id_estado_usuario")))
+                                .nombre(resultado.getString("nombre_estado_usuario"))
+                                .build())
+                        .fechaRegistro(resultado.getObject("fecha_registro", LocalDateTime.class))
+                        .build();
+            }
+        } catch (SQLException excepcion) {
+            var mensajeUsuario = CatalogoMensajes.UsuarioSqlServerDAO.USUARIO_ERROR_PROBLEMA_CONSULTANDO_USUARIO_POR_NOMBRE_USUARIO;
+            throw BodegappDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        } catch (Exception excepcion) {
+            var mensajeUsuario = CatalogoMensajes.UsuarioSqlServerDAO.USUARIO_ERROR_PROBLEMA_NO_CONTROLADO_CONSULTANDO_USUARIO_POR_NOMBRE_USUARIO;
+            throw BodegappDatosExcepcion.crear(mensajeUsuario, excepcion.getMessage(), excepcion);
+        }
+        return usuarioEncontrado;
     }
 }

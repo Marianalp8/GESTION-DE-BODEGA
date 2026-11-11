@@ -3,7 +3,6 @@ package co.edu.uco.bodegapp.transversal.utilitario;
 public class UtilObjeto {
 
     private UtilObjeto(){
-
     }
 
     public static <O> boolean esNulo(O objeto){

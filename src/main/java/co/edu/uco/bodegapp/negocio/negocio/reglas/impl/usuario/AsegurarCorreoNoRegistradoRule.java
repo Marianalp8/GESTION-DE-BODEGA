@@ -5,6 +5,7 @@ import co.edu.uco.bodegapp.entidad.UsuarioEntidad;
 import co.edu.uco.bodegapp.negocio.negocio.reglas.Rule;
 import co.edu.uco.bodegapp.transversal.catalogo.CatalogoMensajes;
 import co.edu.uco.bodegapp.transversal.excepciones.BodegappNegocioExcepcion;
+import co.edu.uco.bodegapp.transversal.utilitario.UtilId;
 
 //dos personas no pueden registrarse con el mismo correo
 public class AsegurarCorreoNoRegistradoRule implements Rule<Object> {
@@ -23,10 +24,9 @@ public class AsegurarCorreoNoRegistradoRule implements Rule<Object> {
         var correo = (String) datos[0];
         var daoFactory = (DAOFactory) datos[1];
 
-        var filtro = new UsuarioEntidad.Builder().correo(correo).build();
-        var usuariosEncontrados = daoFactory.obtenerUsuarioDAO().consultarPorFiltro(filtro);
+        var usuarioEncontrado = daoFactory.obtenerUsuarioDAO().consultarPorCorreo(correo);
 
-        if (!usuariosEncontrados.isEmpty()) {
+        if (!UtilId.VALOR_DEFECTO.equals(usuarioEncontrado.getId())) {
             var mensajeUsuario = CatalogoMensajes.UsuarioNegocioImpl.CORREO_YA_REGISTRADO;
             throw BodegappNegocioExcepcion.crear(mensajeUsuario);
         }

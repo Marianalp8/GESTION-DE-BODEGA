@@ -7,7 +7,6 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilObjeto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-//transporta un registro del historial de un usuario, no valida nada
 public class HistorialUsuarioDto {
 
     private UUID id;

@@ -5,7 +5,6 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilTexto;
 
 import java.util.UUID;
 
-//transporta un estado de usuario de un lado a otro, no valida nada
 public class EstadoUsuarioDto {
 
     private UUID id;

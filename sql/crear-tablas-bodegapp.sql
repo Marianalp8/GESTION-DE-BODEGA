@@ -20,17 +20,15 @@ constraint ck_estado_usuario_nombre
   check (nombre in ('Pendiente', 'Activo', 'Inactivo'))
 );
 
--- las personas registradas, con el rol y el estado que tienen hoy.
--- los default de id_rol y id_estado_usuario son los id fijos de 'Sin asignar' y 'Pendiente'
--- (se insertan con ese id en datos-iniciales-bodegapp.sql)
+-- las personas registradas, con el rol y el estado que tienen hoy
 create table usuario (
 id_usuario uniqueidentifier primary key default newid(),
 nombre varchar(100) not null,
 correo varchar(100) not null unique,
 nombre_usuario varchar(30) not null unique,
 contrasena varchar(255) not null,
-id_rol uniqueidentifier not null default '00000000-0000-0000-0000-000000000000',
-id_estado_usuario uniqueidentifier not null default '00000000-0000-0000-0000-000000000000',
+id_rol uniqueidentifier not null,
+id_estado_usuario uniqueidentifier not null,
 fecha_registro datetime2 not null default sysdatetime(),
 
 constraint fk_usuario_id_rol

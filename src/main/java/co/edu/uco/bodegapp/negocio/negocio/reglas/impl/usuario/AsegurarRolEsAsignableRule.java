@@ -7,10 +7,9 @@ import co.edu.uco.bodegapp.transversal.excepciones.BodegappNegocioExcepcion;
 import co.edu.uco.bodegapp.transversal.utilitario.UtilId;
 
 import java.util.UUID;
-
-//el rol que se le da a un usuario debe existir y no puede ser 'Sin asignar' (cuyo id es el de ceros)
+//el rol que se le da a un usuario debe existir y no puede ser 'Sin asignar'
 public class AsegurarRolEsAsignableRule implements Rule<Object> {
-
+    private static final String ROL_SIN_ASIGNAR = "Sin asignar";
     private static final Rule<Object> instancia = new AsegurarRolEsAsignableRule();
 
     private AsegurarRolEsAsignableRule() {
@@ -35,6 +34,10 @@ public class AsegurarRolEsAsignableRule implements Rule<Object> {
         //cuando el rol no existe, el DAO devuelve uno vacio con el id de ceros
         if (UtilId.VALOR_DEFECTO.equals(rolEncontrado.getId())) {
             var mensajeUsuario = CatalogoMensajes.UsuarioNegocioImpl.ROL_NO_EXISTE;
+            throw BodegappNegocioExcepcion.crear(mensajeUsuario);
+        }
+        if (ROL_SIN_ASIGNAR.equals(rolEncontrado.getNombre())) {
+            var mensajeUsuario = CatalogoMensajes.UsuarioNegocioImpl.ROL_NO_ASIGNABLE;
             throw BodegappNegocioExcepcion.crear(mensajeUsuario);
         }
     }

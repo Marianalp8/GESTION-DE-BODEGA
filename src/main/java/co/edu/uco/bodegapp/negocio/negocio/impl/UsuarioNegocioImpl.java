@@ -7,6 +7,8 @@ import co.edu.uco.bodegapp.entidad.HistorialUsuarioEntidad;
 import co.edu.uco.bodegapp.entidad.RolEntidad;
 import co.edu.uco.bodegapp.entidad.UsuarioEntidad;
 import co.edu.uco.bodegapp.negocio.negocio.UsuarioNegocio;
+import co.edu.uco.bodegapp.negocio.negocio.assembler.impl.EstadoUsuarioEntidadAssembler;
+import co.edu.uco.bodegapp.negocio.negocio.assembler.impl.RolEntidadAssembler;
 import co.edu.uco.bodegapp.negocio.negocio.assembler.impl.UsuarioEntidadAssembler;
 import co.edu.uco.bodegapp.negocio.negocio.reglas.impl.usuario.*;
 import co.edu.uco.bodegapp.transversal.catalogo.CatalogoMensajes;
@@ -21,6 +23,8 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
 
     private static final String ESTADO_ACTIVO = "Activo";
     private static final String ESTADO_INACTIVO = "Inactivo";
+    private static final String ESTADO_PENDIENTE = "Pendiente";
+    private static final String ROL_SIN_ASIGNAR = "Sin asignar";
 
     private final DAOFactory daoFactory;
 
@@ -33,8 +37,8 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
         ValidarDatosRegistrarNuevoUsuarioRule.obtenerInstancia().ejecutar(datos);
         AsegurarCorreoNoRegistradoRule.obtenerInstancia().ejecutar(datos.getCorreo(), daoFactory);
         AsegurarNombreUsuarioNoRegistradoRule.obtenerInstancia().ejecutar(datos.getNombreUsuario(), daoFactory);
-
-        //no se copian el rol ni el estado que mande la pantalla: el Builder deja 'Sin asignar' y 'Pendiente'
+        var rolSinAsignar = consultarRolPorNombre(ROL_SIN_ASIGNAR);
+        var estadoPendiente = consultarEstadoPorNombre(ESTADO_PENDIENTE);
         var usuarioNuevo = new UsuarioDominio.Builder()
                 .id(UtilId.generarId())
                 .nombre(datos.getNombre())
@@ -42,6 +46,8 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
                 .nombreUsuario(datos.getNombreUsuario())
                 .contrasena(UtilContrasena.encriptar(datos.getContrasena()))
                 .fechaRegistro(UtilFecha.obtenerFechaHoraActual())
+                .rol(RolEntidadAssembler.getInstance().convertirADominio(rolSinAsignar))
+                .estadoUsuario(EstadoUsuarioEntidadAssembler.getInstance().convertirADominio(estadoPendiente))
                 .build();
         var usuarioEntidad = UsuarioEntidadAssembler.getInstance().convertirAEntidad(usuarioNuevo);
         daoFactory.obtenerUsuarioDAO().crear(usuarioEntidad);
@@ -55,7 +61,7 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
         AsegurarCredencialesCorrectasRule.obtenerInstancia().ejecutar(usuarioEncontrado, contrasena);
         AsegurarCuentaPuedeIniciarSesionRule.obtenerInstancia().ejecutar(usuarioEncontrado);
 
-        //la contrasena nunca se devuelve, ni encriptada: el Builder la deja vacia
+        //la contrasena nunca se devuelve,
         var usuarioSinContrasena = new UsuarioEntidad.Builder()
                 .id(usuarioEncontrado.getId())
                 .nombre(usuarioEncontrado.getNombre())
@@ -122,19 +128,17 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
     }
 
     //se entra con el nombre de usuario O con el correo: primero se busca por uno y, si no aparece, por el otro
-    //si no aparece por ninguno se devuelve un usuario vacio y la regla de credenciales lo rechaza
+    //las dos busquedas son exactas; si no aparece por ninguna, se devuelve un usuario vacio y la regla de credenciales lo rechaza
     private UsuarioEntidad buscarPorNombreUsuarioOCorreo(String usuarioOCorreo) {
         var usuarioDao = daoFactory.obtenerUsuarioDAO();
 
-        var filtroPorNombreUsuario = new UsuarioEntidad.Builder().nombreUsuario(usuarioOCorreo).build();
-        var usuariosEncontrados = usuarioDao.consultarPorFiltro(filtroPorNombreUsuario);
+        var usuarioEncontrado = usuarioDao.consultarPorNombreUsuario(usuarioOCorreo);
 
-        if (usuariosEncontrados.isEmpty()) {
-            var filtroPorCorreo = new UsuarioEntidad.Builder().correo(usuarioOCorreo).build();
-            usuariosEncontrados = usuarioDao.consultarPorFiltro(filtroPorCorreo);
+        if (UtilId.VALOR_DEFECTO.equals(usuarioEncontrado.getId())) {
+            usuarioEncontrado = usuarioDao.consultarPorCorreo(usuarioOCorreo);
         }
 
-        return usuariosEncontrados.isEmpty() ? new UsuarioEntidad.Builder().build() : usuariosEncontrados.get(0);
+        return usuarioEncontrado;
     }
 
     private EstadoUsuarioEntidad consultarEstadoPorNombre(String nombreEstado) {
@@ -147,6 +151,19 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
         }
         return estadosEncontrados.get(0);
     }
+
+    private RolEntidad consultarRolPorNombre(String nombreRol) {
+        var filtro = new RolEntidad.Builder().nombre(nombreRol).build();
+        var rolesEncontrados = daoFactory.obtenerRolDAO().consultarPorFiltro(filtro);
+
+        if (rolesEncontrados.isEmpty()) {
+            var mensajeUsuario = CatalogoMensajes.UsuarioNegocioImpl.ROL_NO_CONFIGURADO;
+            throw BodegappNegocioExcepcion.crear(mensajeUsuario);
+        }
+        return rolesEncontrados.get(0);
+    }
+
+
 
     //toda accion del administrador hace DOS cosas: actualiza el usuario y agrega una fila al historial
     //las dos van en la misma transaccion (la abre y la confirma la Fachada): o se guardan las dos o ninguna

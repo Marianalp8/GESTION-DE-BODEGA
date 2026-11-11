@@ -8,8 +8,7 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilTexto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-//una persona registrada en el sistema, con el rol y el estado que tiene hoy
-//si no le dan rol ni estado queda con los por defecto (id de ceros = 'Sin asignar' y 'Pendiente')
+
 public class UsuarioEntidad {
 
     private UUID id;

@@ -8,7 +8,6 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilTexto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-//transporta los datos de un usuario (por ejemplo, lo que escribe la persona al registrarse), no valida nada
 public class UsuarioDto {
 
     private UUID id;

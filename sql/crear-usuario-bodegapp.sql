@@ -6,7 +6,7 @@
 -- Crea:
 --   1. La base de datos Bodegapp (si no existe).
 --   2. El login bodegappUser, para entrar al servidor.
---   3. El usuario bodegappUser dentro de la base Bodegapp, con permisos completos sobre ella.
+--   3. El usuario bodegappUser dentro de la base Bodegapp, que solo puede leer y escribir datos.
 
 IF DB_ID('Bodegapp') IS NULL
     CREATE DATABASE Bodegapp;
@@ -23,5 +23,7 @@ IF NOT EXISTS (SELECT 1 FROM sys.database_principals WHERE name = 'bodegappUser'
     CREATE USER bodegappUser FOR LOGIN bodegappUser;
 GO
 
-ALTER ROLE db_owner ADD MEMBER bodegappUser;
+-- Solo puede leer y escribir datos; no puede crear ni borrar tablas
+ALTER ROLE db_datareader ADD MEMBER bodegappUser;
+ALTER ROLE db_datawriter ADD MEMBER bodegappUser;
 GO

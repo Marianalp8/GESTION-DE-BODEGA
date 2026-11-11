@@ -24,6 +24,7 @@ public class SqlServerDAOFactory extends DAOFactory {
 
     private static final HikariDataSource POOL = crearPool();
 
+
     private static HikariDataSource crearPool() {
         HikariConfig configuracion = new HikariConfig();
         configuracion.setJdbcUrl(URL);
@@ -48,7 +49,7 @@ public class SqlServerDAOFactory extends DAOFactory {
             throw BodegappDatosExcepcion.crear(mensajeUsuario, exception.getMessage(), exception);
         }
         // se lleva a daofactory a la madre
-        setConexion(conexion);
+            setConexion(conexion);
     }
 
     //cada DAO recibe la misma conexion, asi todos trabajan dentro de la misma transaccion

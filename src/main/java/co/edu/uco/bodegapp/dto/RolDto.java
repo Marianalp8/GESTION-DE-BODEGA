@@ -5,7 +5,6 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilTexto;
 
 import java.util.UUID;
 
-//transporta un rol de un lado a otro, no valida nada
 public class RolDto {
 
     private UUID id;

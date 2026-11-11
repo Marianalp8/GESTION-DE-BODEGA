@@ -7,8 +7,6 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilObjeto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-//un cambio que hizo un administrador sobre un usuario (aprobar, cambiar rol, desactivar o reactivar)
-//usuario = a quien se lo hicieron, administrador = quien lo hizo, rol y estado = con lo que quedo
 public class HistorialUsuarioEntidad {
 
     private UUID id;
