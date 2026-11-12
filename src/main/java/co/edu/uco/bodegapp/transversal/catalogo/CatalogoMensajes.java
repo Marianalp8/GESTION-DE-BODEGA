@@ -118,6 +118,45 @@ public class CatalogoMensajes {
         public static final String USUARIO_ERROR_PROBLEMA_ENCRIPTANDO_CONTRASENA = "Se ha presentado un problema tratando de proteger la contrasena. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
     }
 
+    //mensajes de la Fachada: solo para lo inesperado (lo esperado ya trae su mensaje desde Negocio o Datos)
+    public static class UsuarioFachadaImpl {
+
+        private UsuarioFachadaImpl() {
+        }
+
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_REGISTRANDO_USUARIO = "Se ha presentado un problema inesperado tratando de registrar el usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_INICIANDO_SESION = "Se ha presentado un problema inesperado tratando de iniciar sesion. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_APROBANDO_USUARIO = "Se ha presentado un problema inesperado tratando de aprobar el usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CAMBIANDO_ROL_USUARIO = "Se ha presentado un problema inesperado tratando de cambiar el rol del usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_DESACTIVANDO_USUARIO = "Se ha presentado un problema inesperado tratando de desactivar el usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_REACTIVANDO_USUARIO = "Se ha presentado un problema inesperado tratando de reactivar el usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_USUARIOS = "Se ha presentado un problema inesperado tratando de consultar los usuarios. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+    }
+
+    public static class RolFachadaImpl {
+
+        private RolFachadaImpl() {
+        }
+
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_TODOS_LOS_ROLES = "Se ha presentado un problema inesperado tratando de consultar los roles. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+    }
+
+    public static class EstadoUsuarioFachadaImpl {
+
+        private EstadoUsuarioFachadaImpl() {
+        }
+
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_TODOS_LOS_ESTADOS = "Se ha presentado un problema inesperado tratando de consultar los estados de usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+    }
+
+    public static class HistorialUsuarioFachadaImpl {
+
+        private HistorialUsuarioFachadaImpl() {
+        }
+
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_CONSULTANDO_HISTORIAL_USUARIO = "Se ha presentado un problema inesperado tratando de consultar el historial del usuario. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+    }
+
     //mensajes de las reglas de negocio del usuario: registro, inicio de sesion y acciones del administrador
     public static class UsuarioNegocioImpl {
 
@@ -160,4 +199,28 @@ public class CatalogoMensajes {
         public static final String ULTIMO_ADMINISTRADOR_ACTIVO = "No es posible realizar la accion porque es el unico administrador activo y el sistema quedaria sin nadie que apruebe cuentas";
         public static final String ESTADO_USUARIO_NO_CONFIGURADO = "No es posible realizar la accion porque falta un estado de usuario en la fuente de informacion. Por favor contacte al administrador de la aplicacion y reporte la novedad";
     }
+    public static class AbstractRestController {
+
+        private AbstractRestController() {
+        }
+
+        public static final String USUARIO_ERROR_PROBLEMA_INESPERADO_EN_CONTROLADOR = "Se ha presentado un problema inesperado procesando la solicitud. Por favor intente de nuevo y si el problema persiste contacte al administrador de la aplicacion y reporte la novedad";
+        public static final String USUARIO_ERROR_RECURSO_NO_EXISTE = "La direccion solicitada no existe";
+    }
+
+    public static class UsuarioControlador {
+
+        private UsuarioControlador() {
+        }
+
+        public static final String USUARIO_APROBADO = "La cuenta fue aprobada correctamente";
+        public static final String ROL_CAMBIADO = "El rol del usuario fue cambiado correctamente";
+        public static final String USUARIO_DESACTIVADO = "La cuenta fue desactivada correctamente";
+        public static final String USUARIO_REACTIVADO = "La cuenta fue reactivada correctamente";
+        public static final String USUARIO_REGISTRADO = "Tu cuenta fue creada y espera aprobacion del administrador";
+    }
+
+
+
+
 }

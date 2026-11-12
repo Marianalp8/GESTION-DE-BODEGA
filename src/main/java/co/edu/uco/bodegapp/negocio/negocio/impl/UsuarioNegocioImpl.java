@@ -17,6 +17,8 @@ import co.edu.uco.bodegapp.transversal.utilitario.UtilContrasena;
 import co.edu.uco.bodegapp.transversal.utilitario.UtilFecha;
 import co.edu.uco.bodegapp.transversal.utilitario.UtilId;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class UsuarioNegocioImpl implements UsuarioNegocio {
@@ -125,6 +127,21 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
         //vuelve con el mismo rol que tenia
         var estadoActivo = consultarEstadoPorNombre(ESTADO_ACTIVO);
         guardarCambioConHistorial(idAdministrador, usuarioActual, usuarioActual.getRol(), estadoActivo);
+    }
+
+    @Override
+    public List<UsuarioDominio> consultarUsuarios(UUID idAdministrador, UsuarioDominio filtro) {
+        //la lista de usuarios tiene datos personales (correos): solo la ve un administrador activo
+        AsegurarQuienGestionaEsAdministradorActivoRule.obtenerInstancia().ejecutar(idAdministrador, daoFactory);
+
+        var filtroEntidad = UsuarioEntidadAssembler.getInstance().convertirAEntidad(filtro);
+        var usuariosEncontrados = daoFactory.obtenerUsuarioDAO().consultarPorFiltro(filtroEntidad);
+
+        var usuariosDominio = new ArrayList<UsuarioDominio>();
+        for (var usuario : usuariosEncontrados) {
+            usuariosDominio.add(UsuarioEntidadAssembler.getInstance().convertirADominio(usuario));
+        }
+        return usuariosDominio;
     }
 
     //se entra con el nombre de usuario O con el correo: primero se busca por uno y, si no aparece, por el otro
