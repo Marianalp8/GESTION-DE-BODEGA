@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodegapp</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<!-- barra de arriba: marca a la izquierda, quien inicio sesion a la derecha -->
+<header class="barra">
+    <div class="marca">
+        <span class="logo">B</span>
+        <span>Bodegapp</span>
+    </div>
+    <div id="barraSesion" class="sesion oculto">
+        <div class="sesion-usuario">
+            <strong id="usuarioActual"></strong>
+            <span id="rolActual" class="pildora pildora-rol"></span>
+        </div>
+        <button type="button" id="botonCerrarSesion" class="secundario">Cerrar sesión</button>
+    </div>
+</header>
+
+<!-- mensajes de exito o error (aparecen arriba y se esconden solos) -->
+<div id="mensaje" class="mensaje oculto"></div>
+
+<main>
+    <!-- pantalla 1: iniciar sesion -->
+    <section id="vistaLogin" class="acceso oculto">
+        <div class="tarjeta tarjeta-acceso">
+            <h2>Iniciar sesión</h2>
+            <p class="subtitulo">Entra con tu usuario o tu correo</p>
+            <form id="formularioLogin">
+                <label for="loginUsuario">Usuario o correo</label>
+                <input type="text" id="loginUsuario" maxlength="100" autocomplete="username">
+                <label for="loginContrasena">Contraseña</label>
+                <input type="password" id="loginContrasena" maxlength="72" autocomplete="current-password">
+                <button type="submit" class="ancho">Entrar</button>
+            </form>
+            <p class="cambio">¿No tienes cuenta?
+                <button type="button" id="botonIrARegistro" class="enlace">Crear cuenta</button>
+            </p>
+        </div>
+    </section>
+
+    <!-- pantalla 2: crear cuenta -->
+    <section id="vistaRegistro" class="acceso oculto">
+        <div class="tarjeta tarjeta-acceso">
+            <h2>Crear cuenta</h2>
+            <p class="subtitulo">Tu cuenta quedará pendiente hasta que un administrador la apruebe</p>
+            <form id="formularioRegistro">
+                <label for="registroNombre">Nombre</label>
+                <input type="text" id="registroNombre" maxlength="100" placeholder="Ej: Ana Ramirez">
+                <label for="registroCorreo">Correo</label>
+                <input type="text" id="registroCorreo" maxlength="100" placeholder="Ej: ana@correo.com">
+                <label for="registroUsuario">Nombre de usuario</label>
+                <input type="text" id="registroUsuario" maxlength="30" placeholder="Ej: ana.ramirez">
+                <label for="registroContrasena">Contraseña</label>
+                <input type="password" id="registroContrasena" maxlength="72" placeholder="Mínimo 8 caracteres, con letras y números" autocomplete="new-password">
+                <button type="submit" class="ancho">Registrarme</button>
+            </form>
+            <p class="cambio">¿Ya tienes cuenta?
+                <button type="button" id="botonIrALogin" class="enlace">Iniciar sesión</button>
+            </p>
+        </div>
+    </section>
+
+    <!-- pantalla 3: panel del administrador -->
+    <section id="vistaAdmin" class="oculto">
+        <div class="encabezado-pagina">
+            <h2>Usuarios</h2>
+            <p class="subtitulo">Aprueba cuentas nuevas, asigna roles y revisa el historial de cada usuario</p>
+        </div>
+
+        <div class="tarjeta">
+            <div class="filtros">
+                <div class="campo">
+                    <label for="tipoBusqueda">Buscar por</label>
+                    <select id="tipoBusqueda">
+                        <option value="nombre">Nombre</option>
+                        <option value="correo">Correo</option>
+                        <option value="nombreUsuario">Usuario</option>
+                    </select>
+                </div>
+                <div class="campo campo-ancho">
+                    <label for="textoBusqueda">Texto</label>
+                    <input type="text" id="textoBusqueda" placeholder="Escribe para buscar" maxlength="100">
+                </div>
+                <div class="campo">
+                    <label for="filtroRol">Rol</label>
+                    <select id="filtroRol"></select>
+                </div>
+                <div class="campo">
+                    <label for="filtroEstado">Estado</label>
+                    <select id="filtroEstado"></select>
+                </div>
+                <div class="campo-botones">
+                    <button type="button" id="botonBuscar">Buscar</button>
+                    <button type="button" id="botonVerTodos" class="secundario">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tarjeta sin-relleno">
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Registro</th>
+                        <th class="derecha">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaUsuarios"></tbody>
+                </table>
+            </div>
+            <p id="avisoRecientes" class="nota oculto"></p>
+        </div>
+    </section>
+
+    <!-- pantalla 4: repartidor -->
+    <section id="vistaRepartidor" class="acceso oculto">
+        <div class="tarjeta tarjeta-acceso centro">
+            <span class="logo logo-grande">B</span>
+            <h2 id="saludoRepartidor">Bienvenido</h2>
+            <p class="subtitulo" id="textoRepartidor"></p>
+        </div>
+    </section>
+</main>
+
+<!-- ventanita del historial: se abre encima del panel -->
+<dialog id="dialogoHistorial">
+    <div class="dialogo-encabezado">
+        <h3 id="tituloHistorial">Historial</h3>
+        <button type="button" id="botonCerrarHistorial" class="secundario">Cerrar</button>
+    </div>
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+            <tr><th>Fecha</th><th>Rol</th><th>Estado</th><th>Hecho por</th></tr>
+            </thead>
+            <tbody id="tablaHistorial"></tbody>
+        </table>
+    </div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

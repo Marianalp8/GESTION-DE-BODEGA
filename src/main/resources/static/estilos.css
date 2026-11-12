@@ -1,0 +1,457 @@
+/* colores de toda la aplicacion: si se cambia uno aqui, cambia en todas partes */
+:root {
+    --azul: #1e3a5f;
+    --azul-boton: #2f6fb2;
+    --azul-boton-hover: #255a91;
+    --azul-suave: #e8f0fa;
+    --fondo: #f4f6f9;
+    --blanco: #ffffff;
+    --borde: #e3e8ef;
+    --texto: #1f2933;
+    --texto-suave: #6b7785;
+    --verde: #1e7a3a;
+    --verde-suave: #e6f6ec;
+    --ambar: #9a5b00;
+    --ambar-suave: #fff3dc;
+    --gris: #52606d;
+    --gris-suave: #eef1f4;
+    --rojo: #c0392b;
+    --rojo-hover: #a93226;
+    --rojo-suave: #fdecea;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    font-size: 15px;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* ---------- barra de arriba ---------- */
+
+.barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background-color: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--azul);
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background-color: var(--azul);
+    color: var(--blanco);
+    font-weight: 700;
+}
+
+.logo-grande {
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+}
+
+.sesion {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.sesion-usuario {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ---------- estructura ---------- */
+
+main {
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 16px;
+}
+
+.tarjeta {
+    background-color: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+
+.tarjeta.sin-relleno {
+    padding: 0;
+    overflow: hidden;
+}
+
+h2 {
+    font-size: 22px;
+    color: var(--azul);
+}
+
+h3 {
+    font-size: 17px;
+    color: var(--azul);
+}
+
+.subtitulo {
+    color: var(--texto-suave);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.encabezado-pagina {
+    margin-bottom: 18px;
+}
+
+/* ---------- login, registro y repartidor: tarjeta centrada ---------- */
+
+.acceso {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.tarjeta-acceso {
+    width: 100%;
+    max-width: 420px;
+    padding: 30px;
+}
+
+.tarjeta-acceso form {
+    margin-top: 18px;
+}
+
+.centro {
+    text-align: center;
+}
+
+.cambio {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--texto-suave);
+}
+
+/* ---------- formularios ---------- */
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gris);
+    margin: 12px 0 6px;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #cbd2d9;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: var(--blanco);
+    color: var(--texto);
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--azul-boton);
+    box-shadow: 0 0 0 3px var(--azul-suave);
+}
+
+/* ---------- botones ---------- */
+
+button {
+    height: 40px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--azul-boton);
+    color: var(--blanco);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+button:hover {
+    background-color: var(--azul-boton-hover);
+}
+
+button.ancho {
+    width: 100%;
+    margin-top: 20px;
+}
+
+button.secundario {
+    background-color: var(--gris-suave);
+    color: var(--texto);
+}
+
+button.secundario:hover {
+    background-color: #dde2e8;
+}
+
+button.peligro {
+    background-color: var(--blanco);
+    color: var(--rojo);
+    border: 1px solid #f0c5c0;
+}
+
+button.peligro:hover {
+    background-color: var(--rojo-suave);
+}
+
+button.enlace {
+    height: auto;
+    padding: 0;
+    background: none;
+    color: var(--azul-boton);
+    font-weight: 600;
+}
+
+button.enlace:hover {
+    background: none;
+    text-decoration: underline;
+}
+
+/* ---------- filtros del panel ---------- */
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.filtros .campo {
+    flex: 0 0 160px;
+}
+
+.filtros .campo-ancho {
+    flex: 1 1 220px;
+}
+
+.filtros label {
+    margin-top: 0;
+}
+
+.campo-botones {
+    display: flex;
+    gap: 8px;
+}
+
+/* ---------- tablas ---------- */
+
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th {
+    text-align: left;
+    padding: 12px 16px;
+    background-color: #f8fafc;
+    color: var(--texto-suave);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--borde);
+}
+
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #fafbfc;
+}
+
+.derecha {
+    text-align: right;
+}
+
+.nombre-usuario {
+    font-weight: 600;
+}
+
+.detalle-usuario {
+    color: var(--texto-suave);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.nota {
+    padding: 12px 16px;
+    border-top: 1px solid var(--borde);
+    background-color: #f8fafc;
+    color: var(--texto-suave);
+    font-size: 13px;
+}
+
+.aviso {
+    color: var(--texto-suave);
+    text-align: center;
+    padding: 28px;
+}
+
+.acciones {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+}
+
+.acciones select {
+    width: 140px;
+    height: 34px;
+    font-size: 13px;
+}
+
+.acciones button {
+    height: 34px;
+    padding: 0 12px;
+    font-size: 13px;
+}
+
+/* ---------- pastillas de rol y estado ---------- */
+
+.pildora {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pildora-rol {
+    background-color: var(--azul-suave);
+    color: var(--azul);
+}
+
+.pildora-pendiente {
+    background-color: var(--ambar-suave);
+    color: var(--ambar);
+}
+
+.pildora-activo {
+    background-color: var(--verde-suave);
+    color: var(--verde);
+}
+
+.pildora-inactivo {
+    background-color: var(--gris-suave);
+    color: var(--gris);
+}
+
+/* ---------- mensajes (arriba en el centro) ---------- */
+
+.mensaje {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    max-width: 90%;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.mensaje.exito {
+    background-color: var(--verde-suave);
+    color: var(--verde);
+}
+
+.mensaje.error {
+    background-color: var(--rojo-suave);
+    color: var(--rojo);
+}
+
+/* ---------- ventanita del historial ---------- */
+
+dialog {
+    margin: auto;
+    width: 92%;
+    max-width: 720px;
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+dialog::backdrop {
+    background-color: rgba(15, 23, 42, 0.45);
+}
+
+.dialogo-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--borde);
+}
+
+/* ---------- celular ---------- */
+
+@media (max-width: 700px) {
+    .barra {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filtros .campo,
+    .filtros .campo-ancho {
+        flex: 1 1 100%;
+    }
+
+    .acciones {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
