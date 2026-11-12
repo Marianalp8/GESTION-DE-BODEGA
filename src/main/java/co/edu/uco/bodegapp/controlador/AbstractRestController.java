@@ -1,6 +1,7 @@
 package co.edu.uco.bodegapp.controlador;
 
 import co.edu.uco.bodegapp.controlador.respuesta.RespuestaError;
+import co.edu.uco.bodegapp.dto.UsuarioDto;
 import co.edu.uco.bodegapp.transversal.catalogo.CatalogoMensajes;
 import co.edu.uco.bodegapp.transversal.excepciones.BodegappExcepcion;
 import co.edu.uco.bodegapp.transversal.utilitario.UtilId;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -42,7 +44,13 @@ public abstract class AbstractRestController {
         var respuesta = RespuestaError.crear(CatalogoMensajes.AbstractRestController.USUARIO_ERROR_RECURSO_NO_EXISTE);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(respuesta);
     }
+    //el id de quien inicio sesion: sale de la sesion, NUNCA de la pantalla
+    //si nadie ha iniciado sesion devuelve el id vacio y las reglas responden "No tienes permiso para esta accion"
     protected UUID obtenerIdAdministrador() {
+        var autenticacion = SecurityContextHolder.getContext().getAuthentication();
+        if (autenticacion != null && autenticacion.getPrincipal() instanceof UsuarioDto usuario) {
+            return usuario.getId();
+        }
         return UtilId.VALOR_DEFECTO;
     }
 

@@ -219,6 +219,14 @@ public class CatalogoMensajes {
         public static final String USUARIO_REACTIVADO = "La cuenta fue reactivada correctamente";
         public static final String USUARIO_REGISTRADO = "Tu cuenta fue creada y espera aprobacion del administrador";
     }
+    public static class SesionControlador {
+
+        private SesionControlador() {
+        }
+
+        public static final String SESION_CERRADA = "La sesion se cerro correctamente";
+    }
+
 
 
 
